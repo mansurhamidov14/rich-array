@@ -1,0 +1,20 @@
+{
+    "name": "twelver313/rich-array",
+    "description": "Improved array constructor with additional methods",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Twelver313\\RichArray\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mansurhamidov14"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "php": ">=7.2"
+    }
+}
