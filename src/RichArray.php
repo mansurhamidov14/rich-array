@@ -14,6 +14,10 @@ class RichArray implements \ArrayAccess
     return count($this->value);
   }
 
+  public function toRaw(): array {
+    return $this->value;
+  }
+
   public function __get(string $name) {
     if ($name == 'length') {
       return $this->getLength();
@@ -181,7 +185,7 @@ class RichArray implements \ArrayAccess
   }
 
   public function lastIndexOf($value) {
-    $reversed = array_reverse($this->value);
+    $reversed = array_reverse($this->value, true);
     foreach ($reversed as $k => $v) {
       if ($value == $v) {
         return $k;
