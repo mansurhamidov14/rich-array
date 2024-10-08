@@ -166,7 +166,7 @@ class RichArray implements \ArrayAccess
     return new self(array_splice($this->value, $offset, $length, $replacement));
   }
 
-  public function join($delimiter = ','): string {
+  public function join(string $delimiter = ','): string {
     return implode($delimiter, $this->value);
   }
 
