@@ -2,12 +2,44 @@
 
 namespace Twelver313\RichArray;
 
-class RichArray implements \ArrayAccess
+use ArrayAccess;
+use Iterator;
+
+class RichArray implements ArrayAccess, Iterator
 {
-  private $value = [];
+  private $value;
+  private $position;
+  private $keys;
 
   public function __construct(array $value = []) {
     $this->value = $value;
+    $this->position = 0;
+    $this->resetKeys();
+  }
+
+  private function resetKeys() {
+    $this->keys = array_keys($this->value);
+  }
+
+  public function rewind() {
+    $this->position = 0; // Reset the position to the first key
+  }
+
+  public function current() {
+    $key = $this->keys[$this->position]; // Get the key at the current position
+    return $this->value[$key]; // Return the value for the current key
+  }
+
+  public function key() {
+    return $this->keys[$this->position]; // Return the actual key at the current position
+  }
+
+  public function next() {
+    ++$this->position;
+  }
+
+  public function valid(): bool {
+    return isset($this->keys[$this->position]);
   }
 
   public function getLength(): int {
@@ -34,6 +66,10 @@ class RichArray implements \ArrayAccess
     return $this->value[$offset];
   }
 
+  public function at($offset) {
+    return $this->offsetGet($offset);
+  }
+
   public function offsetSet($offset, $value) {
     $this->value[$offset] = $value;
   }
@@ -49,19 +85,29 @@ class RichArray implements \ArrayAccess
   }
 
   public function push(): int {
-    return array_push($this->value, ...func_get_args());
+    $res = array_push($this->value, ...func_get_args());
+    $this->resetKeys();
+    return $res;
   }
 
   public function unshift(): int {
-    return array_unshift($this->value, ...func_get_args());
+    $res = array_unshift($this->value, ...func_get_args());
+    $this->resetKeys();
+    $this->position++;
+    return $res;
   }
 
   public function pop() {
-    return array_pop($this->value);
+    $res = array_pop($this->value);
+    $this->resetKeys();
+    return $res;
   }
 
   public function shift() {
-    return array_shift($this->value);
+    $res = array_shift($this->value);
+    $this->resetKeys();
+    if (!empty($this->position)) $this->position--;
+    return $res;
   }
 
   public function map(callable $callback): RichArray {
@@ -120,14 +166,8 @@ class RichArray implements \ArrayAccess
     return $entry[0];
   }
 
-  public function includes($value): bool {
-    foreach ($this->value as $k => $v) {
-      if ($v == $value) {
-        return true;
-      }
-    }
-
-    return false;
+  public function includes($value, $strict = false): bool {
+    return in_array($value, $this->value, $strict);
   }
 
   public function some(callable $callback): bool {
@@ -170,8 +210,16 @@ class RichArray implements \ArrayAccess
     return implode($delimiter, $this->value);
   }
 
-  public function concat() {
-    return new self(array_merge($this->value, ...func_get_args()));
+  public function concat(...$arrays): RichArray {
+    $concat_arrays = [];
+    foreach ($arrays as $array) {
+      if (is_a($array, RichArray::class)) {
+        $concat_arrays[] = $array->toRaw();
+      } else {
+        $concat_arrays[] = $array;
+      }
+    }
+    return new self(array_merge($this->value, ...$concat_arrays));
   }
 
   public function indexOf($value) {

@@ -9,10 +9,7 @@ $assoc_arr = new RichArray([
   ['name' => 'Gulyarchi', 'age' => 2.5],
 ]);
 
-$assoc_arr->push(
+$new_arr = $assoc_arr->concat([
   ['name' => 'Mansur', 'age' => 32],
   ['name' => 'Fatya', 'age' => 28]
-);
-
-var_dump($assoc_arr[0]);
-var_dump($assoc_arr->getLength());
+]);
