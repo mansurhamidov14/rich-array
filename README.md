@@ -26,6 +26,8 @@ Here’s how you can use **RichArray** to make your PHP arrays behave more like 
 <?php
 
 use Twelver313\RichArray\RichArray;
+// or
+use Twelver313\RichArray\RichArrayByReference as RichArray // for very large arrays
 
 // Initialize a RichArray
 $richArray = new RichArray([1, 2, 3]);
