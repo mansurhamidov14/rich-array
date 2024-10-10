@@ -28,7 +28,11 @@ Here’s how you can use **RichArray** to make your PHP arrays behave more like 
 use Twelver313\RichArray\RichArray;
 
 // Initialize a RichArray
-$richArray = new RichArray([1, 2, 3]);
+$richArray = new RichArray(
+  [1, 2, 3], 
+  true  // This parameter is optional. If not passed all mutations of RichArray instance will affect original array. For performance reasons it's `false` by default
+);
+
 
 // Access elements like an array
 echo $richArray[0]; // Output: 1

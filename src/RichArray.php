@@ -11,8 +11,12 @@ class RichArray implements ArrayAccess, Iterator
   private $position;
   private $keys;
 
-  public function __construct(array $value = []) {
-    $this->value = &$value;
+  public function __construct(array $value = [], bool $preserve_original = false) {
+    if ($preserve_original) {
+      $this->value = $value;
+    } else {
+      $this->value = &$value;
+    }
     $this->position = 0;
     $this->resetKeys();
   }
