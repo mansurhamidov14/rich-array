@@ -11,12 +11,8 @@ class RichArray implements ArrayAccess, Iterator
   private $position;
   private $keys;
 
-  public function __construct(array $value = [], bool $preserve_original = false) {
-    if ($preserve_original) {
-      $this->value = $value;
-    } else {
-      $this->value = &$value;
-    }
+  public function __construct(array $value = []) {
+    $this->value = $value;
     $this->position = 0;
     $this->resetKeys();
   }
@@ -140,14 +136,14 @@ class RichArray implements ArrayAccess, Iterator
     return new self(array_reverse($this->value, $preserve_keys));
   }
 
-  public function findEntry(callable $callback): RichArray {
+  public function findEntry(callable $callback): array {
     foreach ($this->value as $key => $value) {
       if ($callback($value, $key)) {
-        return new self([$key, $value]);
+        return [$key, $value];
       }
     }
 
-    return new self([-1, null]);
+    return [-1, null];
   }
 
   public function find(callable $callback) {
@@ -160,7 +156,7 @@ class RichArray implements ArrayAccess, Iterator
     return $entry[0];
   }
 
-  public function findLastEntry(callable $callback): RichArray {
+  public function findLastEntry(callable $callback): array {
     return $this->toReversed(true)->findEntry($callback);
   }
 
