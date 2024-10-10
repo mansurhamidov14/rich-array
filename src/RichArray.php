@@ -12,7 +12,7 @@ class RichArray implements ArrayAccess, Iterator
   private $keys;
 
   public function __construct(array $value = []) {
-    $this->value = $value;
+    $this->value = &$value;
     $this->position = 0;
     $this->resetKeys();
   }
@@ -124,11 +124,15 @@ class RichArray implements ArrayAccess, Iterator
       if ($callback($value, $key)) {
         $filtered_arr->push($value);
       }
-    };
+    }
     return $filtered_arr;
   }
 
-  public function reverse($preserve_keys = false): RichArray {
+  public function reverse($preserve_keys = false) {
+    $this->value = $this->toReversed($preserve_keys)->toRaw();
+  }
+
+  public function toReversed($preserve_keys = false): RichArray {
     return new self(array_reverse($this->value, $preserve_keys));
   }
 
@@ -153,7 +157,7 @@ class RichArray implements ArrayAccess, Iterator
   }
 
   public function findLastEntry(callable $callback): RichArray {
-    return $this->reverse(true)->findEntry($callback);
+    return $this->toReversed(true)->findEntry($callback);
   }
 
   public function findLast(callable $callback) {
@@ -195,7 +199,7 @@ class RichArray implements ArrayAccess, Iterator
   }
 
   public function reduceRight(callable $callback, $initial = null) {
-    return $this->reverse()->reduce($callback, $initial);
+    return $this->toReversed()->reduce($callback, $initial);
   }
 
   public function slice(int $offset, int $length = null): RichArray {
@@ -223,35 +227,27 @@ class RichArray implements ArrayAccess, Iterator
   }
 
   public function indexOf($value) {
-    foreach ($this->value as $k => $v) {
-      if ($value == $v) {
-        return $k;
-      }
-    }
-
-    return -1;
+    $index = array_search($value, $this->value);
+    if ($index === false) return -1;
+    return $index;
   }
 
   public function lastIndexOf($value) {
-    $reversed = array_reverse($this->value, true);
-    foreach ($reversed as $k => $v) {
-      if ($value == $v) {
-        return $k;
-      }
-    }
-
-    return -1;
+    return $this->toReversed(true)->indexOf($value);
   }
 
   public function sort(callable $callback): RichArray {
-    $copy = $this->value;
-
     if ($callback) {
-      usort($copy, $callback);
+      usort($this->value, $callback);
     } else {
-      sort($copy);
+      sort($this->value);
     }
 
-    return new self($copy);
+    return $this;
+  }
+
+  public function toSorted(callable $callback): RichArray {
+    $copy = new self($this->value);
+    return $copy->sort($callback);
   }
 }

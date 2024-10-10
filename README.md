@@ -89,6 +89,7 @@ $filtered = $richArray->filter(function ($value) {
 
 - `getLength()` or `length`
 - `toRaw()` - library specific method
+- `at(int $index)`
 - `include($value)`
 - `indexOf($value)`
 - `lastIndexOf($value)`
@@ -113,8 +114,10 @@ $filtered = $richArray->filter(function ($value) {
 - `findLastIndex(callable $callback)`
 - `some(callable $callback)`
 - `every(callable $callback)`
-- `sort(callable $callback)` - Unlike javascript `sort` it does not mutate original array
-- `reverse(bool $preserve_key)` - Unlike javascript `reverse` it does not mutate original array
+- `sort(callable $callback)`
+- `reverse(bool $preserve_key)`
+- `toSorted(callable $callback)`
+- `toReversed(bool $preserve_key)`
 
 ## Why RichArray?
 
