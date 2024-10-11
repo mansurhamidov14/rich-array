@@ -21,6 +21,10 @@ class RichArray implements ArrayAccess, Iterator
     $this->keys = array_keys($this->value);
   }
 
+  public function __toString(): string {
+    return '['. $this->join(', ') . ']';
+  }
+
   public function rewind() {
     $this->position = 0; // Reset the position to the first key
   }

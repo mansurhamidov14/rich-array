@@ -131,7 +131,7 @@ With **RichArray**, you can enjoy:
 
 ## License
 
-This library is open-sourced software licensed under the [MIT license](LICENSE).
+This library is open-sourced software licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 ---
 

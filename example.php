@@ -14,29 +14,29 @@ echo "Accessing element at index 1 with traditional method: " . $array[1] . "\n\
 echo "Modifying array element by index:\n";
 echo "\$array[1] = 21;\n";
 $array[1] = 21;
-echo "After modifying index 1: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "After modifying index 1: $array\n\n";
 
 // Push elements to the array
 $array->push(60, 70);
 echo "\$array->push(60, 70)\n";
-echo "After push: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "After push: $array\n\n";
 
 // Unshift elements to the beginning
 $array->unshift(0);
 echo "\$array->unshift(0)\n";
-echo "After unshift: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "After unshift: $array\n\n";
 
 // Pop the last element
 $last = $array->pop();
 echo "\$array->pop()\n";
 echo "Popped element: $last\n";
-echo "After pop: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "After pop: $array\n\n";
 
 // Shift the first element
 $first = $array->shift();
 echo "\$array->shift()\n";
 echo "Shifted element: $first\n";
-echo "After shift: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "After shift: $array\n\n";
 
 // Map operation
 $mapped = $array->map(function ($value) {
@@ -45,7 +45,7 @@ $mapped = $array->map(function ($value) {
 echo "\$mapped = \$array->map(function (\$value) {
   return \$value * 2;
 });\n";
-echo "Mapped array (values * 2): [" . implode(', ', $mapped->toRaw()) . "]\n\n";
+echo "Mapped array (values * 2): $mapped\n\n";
 
 // Filter operation (keep only even numbers)
 $filtered = $array->filter(function ($value) {
@@ -54,17 +54,17 @@ $filtered = $array->filter(function ($value) {
 echo "\$filtered = \$array->filter(function (\$value) {
   return \$value % 20 == 0;
 });\n";
-echo "Filtered array: [" . implode(', ', $filtered->toRaw()) . "]\n\n";
+echo "Filtered array: $filtered\n\n";
 
 // Reverse the array
 $array->reverse();
 echo "\$array->reverse()\n";
-echo "Reversed array: [" . implode(', ', $array->toRaw()) . "]\n\n";
+echo "Reversed array: $array\n\n";
 
 $reversed = $array->toReversed();
 echo "\$reversed = \$array->toReversed()\n";
-echo "Original array (it was reversed in previous call): [" . implode(', ', $array->toRaw()) . "]\n";
-echo "New reversed array: [" . implode(', ', $reversed->toRaw()) . "]\n\n";
+echo "Original array (it was reversed in previous call): $array\n";
+echo "New reversed array: $reversed\n\n";
 
 // Find element
 $found = $array->find(function ($value) {
@@ -73,7 +73,7 @@ $found = $array->find(function ($value) {
 echo "\$found = \$array->find(function (\$value) {
   return \$value < 30;
 });\n";
-echo "First element in [" . implode(', ', $array->toRaw()) . "] smaller than 30 is: " . $found . "\n\n";
+echo "First element in $array smaller than 30 is: " . $found . "\n\n";
 
 // Find index of element
 $foundIndex = $array->findIndex(function ($value) {
@@ -82,7 +82,7 @@ $foundIndex = $array->findIndex(function ($value) {
 echo "\$foundIndex = \$array->findIndex(function (\$value) {
   return \$value < 30;
 });\n";
-echo "Index of first element in [" . implode(', ', $array->toRaw()) . "] smaller than 30 is: " . $foundIndex . "\n\n";
+echo "Index of first element in $array smaller than 30 is: " . $foundIndex . "\n\n";
 
 // Find last element
 $foundLast = $array->findLast(function ($value) {
@@ -91,7 +91,7 @@ $foundLast = $array->findLast(function ($value) {
 echo "\$foundLast = \$array->findLast(function (\$value) {
   return \$value > 30;
 });\n";
-echo "Last element in [" . implode(', ', $array->toRaw()) . "] greater than 30: " . $foundLast . "\n\n";
+echo "Last element in $array greater than 30: " . $foundLast . "\n\n";
 
 // Find last index of element
 $foundLastIndex = $array->findLastIndex(function ($value) {
@@ -101,16 +101,16 @@ $foundLastIndex = $array->findLastIndex(function ($value) {
 echo "\$foundLastIndex = \$array->findLastIndex(function (\$value) {
   return \$value > 30;
 });\n";
-echo "Index of last element in [" . implode(', ', $array->toRaw()) . "] greater than 30: " . $foundLastIndex . "\n\n";
+echo "Index of last element in $array greater than 30: " . $foundLastIndex . "\n\n";
 
 // Check if array includes a value
 $includes_20 = $array->includes(20);
 echo "\$includes_20 = \$array->includes(20);\n";
-echo "Array [" . implode(', ', $array->toRaw()) . "] includes 20: " . ($includes_20 ? 'true' : 'false') . "\n\n";
+echo "Array $array includes 20: " . ($includes_20 ? 'true' : 'false') . "\n\n";
 
 $includes_30 = $array->includes(30);
 echo "\$includes_30 = \$array->includes(30);\n";
-echo "Array [" . implode(', ', $array->toRaw()) . "] includes 30: " . ($includes_30 ? 'true' : 'false') . "\n\n";
+echo "Array $array includes 30: " . ($includes_30 ? 'true' : 'false') . "\n\n";
 
 // Reduce array (sum of all elements)
 $sum = $array->reduce(function ($accumulator, $value) {
@@ -119,23 +119,23 @@ $sum = $array->reduce(function ($accumulator, $value) {
 echo "\$sum = \$array->reduce(function (\$accumulator, \$value) {
   return \$accumulator + \$value;
 }, 0);\n";
-echo "Sum of array [" . implode(', ', $array->toRaw()) . "] elements: " . $sum . "\n\n";
+echo "Sum of array $array elements: " . $sum . "\n\n";
 
 // Slice operation
 $sliced = $array->slice(1, 3);
 echo "\$sliced = \$array->slice(1, 3);\n";
-echo "Original array is [" . implode(', ', $array->toRaw()) . "].\nSliced array (from index 1, length 3): " . implode(', ', $sliced->toRaw()) . "\n\n";
+echo "Original array is $array.\nSliced array (from index 1, length 3): $sliceed\n\n";
 
 // Concat operation
 $concatenated = $array->concat([81, 91, 101]);
 echo "\$concatenated = \$array->concat([81, 91, 101]);\n";
-echo "Original array: [" . implode(', ', $array->toRaw()) . "]\n";
-echo "Concatenated array: [" . implode(', ', $concatenated->toRaw()) . "]\n\n";
+echo "Original array: $array\n";
+echo "Concatenated array: $concatenated\n\n";
 
 // Join array into string
 $joined = $array->join('-');
 echo "\$joined = \$array->join('-');\n";
-echo "Joined array [" . implode(', ', $array->toRaw()) . "] (with '-'): " . $joined . "\n\n";
+echo "Joined array $array (with '-'): " . $joined . "\n\n";
 
 // Sort array
 $array_for_sorting_with_mutation = new RichArray([3, 4, 2, 1, 6]);
@@ -146,7 +146,7 @@ echo "\$array_for_sorting_with_mutation = new RichArray([3, 4, 2, 1, 6]);
 \$array_for_sorting_with_mutation->sort(function (\$a, \$b) {
   return \$a - \$b;
 });\n";
-echo "Array was sorted as: " . implode(', ', $array_for_sorting_with_mutation->toRaw()) . "\n\n";
+echo "Array was sorted as: $array_for_sorting_with_mutation\n\n";
 
 $array_for_sorting_without_mutation = new RichArray([3, 4, 2, 1, 6]);
 $sorted = $array_for_sorting_without_mutation->toSorted(function ($a, $b) {
@@ -156,16 +156,16 @@ echo "\$array_for_sorting_without_mutation = new RichArray([3, 4, 2, 1, 6]);
 \$sorted = \$array_for_sorting_without_mutation->toSorted(function (\$a, \$b) {
   return \$b - \$a;
 });\n";
-echo "Original array is [" . implode(', ', $array_for_sorting_without_mutation->toRaw()) . "]\n";
-echo "Sorted new array is [" . implode(', ', $sorted->toRaw()) . "]\n\n";
+echo "Original array is $array_for_sorting_without_mutation\n";
+echo "Sorted new array is $sorted\n\n";
 
 // Splice operation
 $array_to_splice = new RichArray([11, 22, 33, 44, 55, 66, 77, 88, 99]);
 $spliced = $array_to_splice->splice(3, 2);
 echo "\$array_to_splice = new RichArray([11, 22, 33, 44, 55, 66, 77, 88, 99]);\n";
 echo "\$spliced = \$array_to_splice->splice(3, 2);\n";
-echo "Spliced chunk is: [" . implode(', ', $spliced->toRaw()) . "]\n";
-echo "Original array became: [" . implode(', ', $array_to_splice->toRaw()) . "]\n";
+echo "Spliced chunk is: $spliced\n";
+echo "Original array became: $array\n";
 
 echo "Some operation (check if some elements are greater than 60):\n";
 $someFalse = $array->some(function ($value) {
